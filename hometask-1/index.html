@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Notes App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+  <body>
+    <main>
+        
+        <nav class="navbar bg-dark border-bottom border-body px-4" data-bs-theme="dark">
+            <ul class="hstack gap-3 navbar-nav">
+                <li class="nav-item">
+                    <a class="navbar-brand" href="#">
+                        <i class="fa-solid fa-note-sticky fa-xl"></i>
+                        Notes App
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Archived</a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="container py-4">
+
+            <!-- Notes List Table -->
+            <div class="row mb-2">
+                <h3>Notes List</h3>
+                <table id="notes-list" class="table table-primary">
+                    <thead>
+                        <tr class="table-dark">
+                            <th scope="col">Name</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Content</th>
+                            <th scope="col">Dates</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Meeting with Team</td>
+                            <td>2023-07-29 10:30:00</td>
+                            <td>Task</td>
+                            <td class="text-truncate" style="max-width: 150px;">
+                                Prepare presentation for the meeting. Meeting is scheduled on 2023-08-05 at 14:00
+                            </td>
+                            <td>2023-08-05</td>
+                            <td class="text-end">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#editNote">
+                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-dark">
+                                        <i class="fa-solid fa-box-archive fa-lg"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-dark">
+                                        <i class="fa-solid fa-trash fa-lg"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Go to the zoo</td>
+                            <td>Mar 15 2023</td>
+                            <td>Task</td>
+                            <td class="text-truncate" style="max-width: 150px;">
+                                I'm going to visit a zoo on Mar 20 2023
+                            </td>
+                            <td>Mar 20 2023</td>
+                            <td class="text-end">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#editNote">
+                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-dark">
+                                        <i class="fa-solid fa-box-archive fa-lg"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-dark">
+                                        <i class="fa-solid fa-trash fa-lg"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Go to the zoo</td>
+                            <td>Mar 15 2023</td>
+                            <td>Task</td>
+                            <td class="text-truncate" style="max-width: 150px;">
+                                I'm going to visit a zoo on Mar 20 2023
+                            </td>
+                            <td>Mar 20 2023</td>
+                            <td class="text-end">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#editNote">
+                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-dark">
+                                        <i class="fa-solid fa-box-archive fa-lg"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-dark">
+                                        <i class="fa-solid fa-trash fa-lg"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-grid justify-content-end px-0">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createNote">New Note</button>
+                </div>
+            </div>
+
+            <!-- Summary Table -->
+            <div class="row mb-2">
+                <h3>Summary</h2>
+                <table id="summary" class="table table-primary">
+                    <thead>
+                        <tr class="table-dark">
+                            <th scope="col">Category</th>
+                            <th scope="col">Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Task</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Idea</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>Random Thought</td>
+                            <td>3</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Create Note Modal Window -->
+            <div class="modal fade" id="createNote" tabindex="-1" aria-labelledby="createNoteLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="createNoteLabel">New Note</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="note-name" class="col-form-label">Name:</label>
+                                    <input type="text" class="form-control" id="note-name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="note-category" class="col-form-label">Category:</label>
+                                    <select class="form-select" aria-label="categorySelect">
+                                        <option selected>Select category</option>
+                                        <option value="1">Task</option>
+                                        <option value="2">Idea</option>
+                                        <option value="3">Random Thought</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">Content:</label>
+                                    <textarea class="form-control" id="message-text" rows="5"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-dark">Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Note Modal Window -->
+            <div class="modal fade" id="editNote" tabindex="-1" aria-labelledby="editNoteLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="editNoteLabel">Edit Note</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="note-name" class="col-form-label">Name:</label>
+                                    <input type="text" class="form-control" id="note-name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="note-created-at" class="col-form-label">Created At:</label>
+                                    <input type="text" class="form-control" id="note-created-at" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="note-category" class="col-form-label">Category:</label>
+                                    <select class="form-select" aria-label="categorySelect">
+                                        <option selected>Select category</option>
+                                        <option value="1">Task</option>
+                                        <option value="2">Idea</option>
+                                        <option value="3">Random Thought</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="note-dates" class="col-form-label">Dates:</label>
+                                    <ul class="list-group list-group-horizontal">
+                                        <li class="list-group-item">Date 1</li>
+                                        <li class="list-group-item">Date 2</li>
+                                        <li class="list-group-item">Date 3</li>
+                                    </ul>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">Content:</label>
+                                    <textarea class="form-control" id="edit-content-text" rows="5"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-dark">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  </body>
+</html>
