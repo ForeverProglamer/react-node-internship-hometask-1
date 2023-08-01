@@ -116,7 +116,7 @@
             </div>
 
             <!-- Edit Note Modal Window -->
-            <div class="modal fade" id="editNote" tabindex="-1" aria-labelledby="editNoteLabel" aria-hidden="true">
+            <div class="modal fade" id="edit-note-modal-window" tabindex="-1" aria-labelledby="editNoteLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -124,41 +124,37 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form id="edit-note-form">
                                 <div class="mb-3">
                                     <label for="note-name" class="col-form-label">Name:</label>
-                                    <input type="text" class="form-control" id="note-name">
+                                    <input id="edit-note-name" type="text" class="form-control">
                                 </div>
                                 <div class="mb-3">
                                     <label for="note-created-at" class="col-form-label">Created At:</label>
-                                    <input type="text" class="form-control" id="note-created-at" readonly>
+                                    <input id="edit-note-created-at" type="text" class="form-control" id="note-created-at" readonly>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note-category" class="col-form-label">Category:</label>
-                                    <select class="form-select" aria-label="categorySelect">
+                                    <select id="edit-note-category" class="form-select" aria-label="categorySelect">
                                         <option selected>Select category</option>
-                                        <option value="1">Task</option>
-                                        <option value="2">Idea</option>
-                                        <option value="3">Random Thought</option>
+                                        <option value="Task">Task</option>
+                                        <option value="Idea">Idea</option>
+                                        <option value="Random Thought">Random Thought</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note-dates" class="col-form-label">Dates:</label>
-                                    <ul class="list-group list-group-horizontal">
-                                        <li class="list-group-item">Date 1</li>
-                                        <li class="list-group-item">Date 2</li>
-                                        <li class="list-group-item">Date 3</li>
-                                    </ul>
+                                    <ul id="edit-note-dates" class="list-group list-group-horizontal"></ul>
                                 </div>
                                 <div class="mb-3">
                                     <label for="message-text" class="col-form-label">Content:</label>
-                                    <textarea class="form-control" id="edit-content-text" rows="5"></textarea>
+                                    <textarea id="edit-note-content" class="form-control" rows="5"></textarea>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-dark">Save</button>
+                            <button id="edit-note-save-button" type="button" class="btn btn-dark">Save</button>
                         </div>
                     </div>
                 </div>

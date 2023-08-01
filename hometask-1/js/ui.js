@@ -10,6 +10,38 @@ const createNoteButton = document.getElementById('create-note-button');
 
 const newNoteButton = document.getElementById('new-note-button');
 
+const editModalWindow = document.getElementById('edit-note-modal-window');
+const editForm = document.getElementById('edit-note-form');
+
+const editNameInput = document.getElementById('edit-note-name');
+const editCreatedAtInput = document.getElementById('edit-note-created-at');
+const editCategorySelect = document.getElementById('edit-note-category');
+const editDatesList = document.getElementById('edit-note-dates');
+const editContentTextArea = document.getElementById('edit-note-content');
+const editSaveButton = document.getElementById('edit-note-save-button');
+
+const renderDate = (date) => new Intl.DateTimeFormat('en-GB').format(date);
+
+const readNote = (index) => {
+  clearEditForm();
+
+  const note = service.getNote(index);
+
+  editForm.setAttribute('data-id', index);
+  editNameInput.value = note.name;
+  editCreatedAtInput.value = renderDate(note.createdAt);
+  editCategorySelect.value = note.category;
+
+  note.dates.forEach((date) => {
+    const li = document.createElement('li');
+    li.className = 'list-group-item';
+    li.appendChild(document.createTextNode(renderDate(date)));
+    editDatesList.append(li);
+  });
+
+  editContentTextArea.value = note.content;
+};
+
 const removeNote = (index) => {
   service.removeNote(index);
   renderPage();
@@ -21,20 +53,24 @@ const archiveNote = (index) => {
 };
 
 const actionHandlers = {
+  read: readNote,
   remove: removeNote,
   archive: archiveNote,
 };
 
 const noteButtonsHTML = (index) => `
   <div class="btn-group">
-    <a class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#editNote">
-        <i class="fa-solid fa-pen-to-square fa-lg"></i>
+    <a class="btn btn-sm btn-dark" 
+      data-bs-toggle="modal" data-bs-target="#edit-note-modal-window" 
+      data-action="read" data-id="${index}"
+    >
+      <i class="fa-solid fa-pen-to-square fa-lg"></i>
     </a>
     <a class="btn btn-sm btn-dark" data-action="archive" data-id="${index}">
-        <i class="fa-solid fa-box-archive fa-lg"></i>
+      <i class="fa-solid fa-box-archive fa-lg"></i>
     </a>
     <a class="btn btn-sm btn-dark" data-action="remove" data-id="${index}">
-        <i class="fa-solid fa-trash fa-lg"></i>
+      <i class="fa-solid fa-trash fa-lg"></i>
     </a>
   </div>
 `;
@@ -43,8 +79,6 @@ const getNoteList = () => {
   if (homePage.classList.contains('active')) return service.getActiveNotes();
   return service.getArchivedNotes();
 };
-
-const renderDate = (date) => new Intl.DateTimeFormat('en-GB').format(date);
 
 const noteToTableRow = ([index, note]) => {
   const tr = document.createElement('tr');
@@ -100,6 +134,18 @@ const toggleView = (event) => {
   renderPage();
 };
 
+const getEditFormData = () => ({
+  name: editNameInput.value,
+  category: editCategorySelect.value,
+  content: editContentTextArea.value,
+});
+
+const clearEditForm = () => {
+  editForm.reset();
+  editForm.removeAttribute('data-id');
+  editDatesList.innerHTML = '';
+};
+
 const initPage = () => {
   homePage.addEventListener('click', toggleView);
   archivedPage.addEventListener('click', toggleView);
@@ -129,6 +175,17 @@ const initPage = () => {
 
     const { action, id } = target.dataset;
     actionHandlers[action](id);
+  });
+
+  editModalWindow.addEventListener('hide.bs.modal', clearEditForm);
+
+  editSaveButton.addEventListener('click', () => {
+    // TODO validate form
+    const formData = getEditFormData();
+    const { id } = editForm.dataset;
+    service.updateNote(id, formData);
+    readNote(id);
+    renderPage();
   });
 
   renderPage();
