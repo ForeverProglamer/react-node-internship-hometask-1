@@ -159,9 +159,8 @@ const initPage = () => {
   createNoteButton.addEventListener('click', () => {
     // TODO validate form
     const formData = getCreateFormData();
-    console.log(formData);
-    const note = service.addNote(formData);
-    notesContainer.append(noteToTableRow(note));
+    service.addNote(formData);
+    renderPage();
     clearCreateForm();
   });
 
