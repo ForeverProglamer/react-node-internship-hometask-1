@@ -47,7 +47,7 @@
                     </tbody>
                 </table>
                 <div class="d-grid justify-content-end px-0">
-                    <button id="new-note-button" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createNote">New Note</button>
+                    <button id="new-note-button" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#create-note-modal-window">New Note</button>
                 </div>
             </div>
 
@@ -79,7 +79,7 @@
             </div>
 
             <!-- Create Note Modal Window -->
-            <div class="modal fade" id="createNote" tabindex="-1" aria-labelledby="createNoteLabel" aria-hidden="true">
+            <div class="modal fade" id="create-note-modal-window" tabindex="-1" aria-labelledby="createNoteLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -87,7 +87,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form id="create-note-form">
                                 <div class="mb-3">
                                     <label for="note-name" class="col-form-label">Name:</label>
                                     <input type="text" class="form-control" id="create-note-name" required>

@@ -3,6 +3,8 @@ import * as service from './note_service.js';
 const [homePage, archivedPage] = document.querySelectorAll('.nav-link');
 const notesContainer = document.querySelector('#notes-list > tbody');
 
+const createForm = document.getElementById('create-note-form');
+
 const createNameInput = document.getElementById('create-note-name');
 const createCategorySelect = document.getElementById('create-note-category');
 const createContentTextArea = document.getElementById('create-note-content');
@@ -121,11 +123,7 @@ const getCreateFormData = () => ({
   content: createContentTextArea.value,
 });
 
-const clearCreateForm = () => {
-  createNameInput.value = '';
-  createCategorySelect.selectedIndex = 0;
-  createContentTextArea.value = '';
-};
+const clearCreateForm = () => createForm.reset();
 
 const toggleView = (event) => {
   const current = document.querySelector('.nav-link.active');
