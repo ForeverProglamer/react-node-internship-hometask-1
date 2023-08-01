@@ -44,76 +44,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Meeting with Team</td>
-                            <td>2023-07-29 10:30:00</td>
-                            <td>Task</td>
-                            <td class="text-truncate" style="max-width: 150px;">
-                                Prepare presentation for the meeting. Meeting is scheduled on 2023-08-05 at 14:00
-                            </td>
-                            <td>2023-08-05</td>
-                            <td class="text-end">
-                                <div class="btn-group">
-                                    <a class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#editNote">
-                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                                    </a>
-                                    <a class="btn btn-sm btn-dark">
-                                        <i class="fa-solid fa-box-archive fa-lg"></i>
-                                    </a>
-                                    <a class="btn btn-sm btn-dark">
-                                        <i class="fa-solid fa-trash fa-lg"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Go to the zoo</td>
-                            <td>Mar 15 2023</td>
-                            <td>Task</td>
-                            <td class="text-truncate" style="max-width: 150px;">
-                                I'm going to visit a zoo on Mar 20 2023
-                            </td>
-                            <td>Mar 20 2023</td>
-                            <td class="text-end">
-                                <div class="btn-group">
-                                    <a class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#editNote">
-                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                                    </a>
-                                    <a class="btn btn-sm btn-dark">
-                                        <i class="fa-solid fa-box-archive fa-lg"></i>
-                                    </a>
-                                    <a class="btn btn-sm btn-dark">
-                                        <i class="fa-solid fa-trash fa-lg"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Go to the zoo</td>
-                            <td>Mar 15 2023</td>
-                            <td>Task</td>
-                            <td class="text-truncate" style="max-width: 150px;">
-                                I'm going to visit a zoo on Mar 20 2023
-                            </td>
-                            <td>Mar 20 2023</td>
-                            <td class="text-end">
-                                <div class="btn-group">
-                                    <a class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#editNote">
-                                        <i class="fa-solid fa-pen-to-square fa-lg"></i>
-                                    </a>
-                                    <a class="btn btn-sm btn-dark">
-                                        <i class="fa-solid fa-box-archive fa-lg"></i>
-                                    </a>
-                                    <a class="btn btn-sm btn-dark">
-                                        <i class="fa-solid fa-trash fa-lg"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
                 <div class="d-grid justify-content-end px-0">
-                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createNote">New Note</button>
+                    <button id="new-note-button" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createNote">New Note</button>
                 </div>
             </div>
 
@@ -156,26 +90,26 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="note-name" class="col-form-label">Name:</label>
-                                    <input type="text" class="form-control" id="note-name">
+                                    <input type="text" class="form-control" id="create-note-name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note-category" class="col-form-label">Category:</label>
-                                    <select class="form-select" aria-label="categorySelect">
+                                    <select id="create-note-category" class="form-select" aria-label="categorySelect" required>
                                         <option selected>Select category</option>
-                                        <option value="1">Task</option>
-                                        <option value="2">Idea</option>
-                                        <option value="3">Random Thought</option>
+                                        <option value="Task">Task</option>
+                                        <option value="Idea">Idea</option>
+                                        <option value="Random Thought">Random Thought</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="message-text" class="col-form-label">Content:</label>
-                                    <textarea class="form-control" id="message-text" rows="5"></textarea>
+                                    <textarea class="form-control" id="create-note-content" rows="5" required></textarea>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-dark">Create</button>
+                            <button id="create-note-button" type="button" class="btn btn-dark">Create</button>
                         </div>
                     </div>
                 </div>
@@ -233,6 +167,7 @@
         </div>
 
     </main>
+    <script type="module" src="./index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   </body>
 </html>
