@@ -1,7 +1,9 @@
 import * as service from './note_service.js';
 
 const [homePage, archivedPage] = document.querySelectorAll('.nav-link');
+
 const notesContainer = document.querySelector('#notes-list > tbody');
+const summaryContainer = document.querySelector('#summary > tbody');
 
 const createForm = document.getElementById('create-note-form');
 
@@ -77,9 +79,17 @@ const noteButtonsHTML = (index) => `
   </div>
 `;
 
-const getNoteList = () => {
-  if (homePage.classList.contains('active')) return service.getActiveNotes();
-  return service.getArchivedNotes();
+const getPageData = () => {
+  if (homePage.classList.contains('active')) {
+    return {
+      noteList: service.getActiveNotes(),
+      summary: service.getActiveNotesSummary(),
+    };
+  }
+  return {
+    noteList: service.getArchivedNotes(),
+    summary: service.getArchivedNotesSummary(),
+  };
 };
 
 const noteToTableRow = ([index, note]) => {
@@ -111,10 +121,28 @@ const noteToTableRow = ([index, note]) => {
   return tr;
 };
 
+const summaryToTableRows = (summary) =>
+  Object.entries(summary).map(([category, count]) => {
+    const tr = document.createElement('tr');
+
+    const tdCategory = document.createElement('td');
+    tdCategory.appendChild(document.createTextNode(category));
+
+    const tdCount = document.createElement('td');
+    tdCount.appendChild(document.createTextNode(count));
+
+    tr.append(tdCategory, tdCount);
+    return tr;
+  });
+
 const renderPage = () => {
-  const noteList = getNoteList();
+  const { noteList, summary } = getPageData();
+
   notesContainer.innerHTML = '';
   notesContainer.append(...noteList.map(noteToTableRow));
+
+  summaryContainer.innerHTML = '';
+  summaryContainer.append(...summaryToTableRows(summary));
 };
 
 const getCreateFormData = () => ({
