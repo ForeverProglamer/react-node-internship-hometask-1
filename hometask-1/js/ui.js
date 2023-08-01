@@ -1,4 +1,4 @@
-import { getActiveNotes, getArchivedNotes, addNote } from './note_service.js';
+import * as service from './note_service.js';
 
 const [homePage, archivedPage] = document.querySelectorAll('.nav-link');
 const notesContainer = document.querySelector('#notes-list > tbody');
@@ -10,30 +10,44 @@ const createNoteButton = document.getElementById('create-note-button');
 
 const newNoteButton = document.getElementById('new-note-button');
 
-const noteButtonsHTML = `
+const removeNote = (index) => {
+  service.removeNote(index);
+  renderPage();
+};
+
+const archiveNote = (index) => {
+  service.archiveNote(index);
+  renderPage();
+};
+
+const actionHandlers = {
+  remove: removeNote,
+  archive: archiveNote,
+};
+
+const noteButtonsHTML = (index) => `
   <div class="btn-group">
     <a class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#editNote">
         <i class="fa-solid fa-pen-to-square fa-lg"></i>
     </a>
-    <a class="btn btn-sm btn-dark archive">
-        <i class="fa-solid fa-box-archive fa-lg archive"></i>
+    <a class="btn btn-sm btn-dark" data-action="archive" data-id="${index}">
+        <i class="fa-solid fa-box-archive fa-lg"></i>
     </a>
-    <a class="btn btn-sm btn-dark remove">
-        <i class="fa-solid fa-trash fa-lg remove"></i>
+    <a class="btn btn-sm btn-dark" data-action="remove" data-id="${index}">
+        <i class="fa-solid fa-trash fa-lg"></i>
     </a>
   </div>
 `;
 
 const getNoteList = () => {
-  if (homePage.classList.contains('active')) return getActiveNotes();
-  return getArchivedNotes();
+  if (homePage.classList.contains('active')) return service.getActiveNotes();
+  return service.getArchivedNotes();
 };
 
 const renderDate = (date) => new Intl.DateTimeFormat('en-GB').format(date);
 
 const noteToTableRow = ([index, note]) => {
   const tr = document.createElement('tr');
-  tr.setAttribute('data-note-id', index);
 
   const tdName = document.createElement('td');
   tdName.appendChild(document.createTextNode(note.name));
@@ -55,7 +69,7 @@ const noteToTableRow = ([index, note]) => {
   );
 
   const tdButtons = document.createElement('td');
-  tdButtons.innerHTML = noteButtonsHTML;
+  tdButtons.innerHTML = noteButtonsHTML(index);
 
   tr.append(tdName, tdCreatedAt, tdCategory, tdContent, tdDates, tdButtons);
   return tr;
@@ -102,9 +116,19 @@ const initPage = () => {
     // TODO validate form
     const formData = getCreateFormData();
     console.log(formData);
-    const note = addNote(formData);
+    const note = service.addNote(formData);
     notesContainer.append(noteToTableRow(note));
     clearCreateForm();
+  });
+
+  notesContainer.addEventListener('click', (event) => {
+    const target = event.target.closest('a[data-action]');
+
+    if (!target) return;
+    if (!notesContainer.contains(target)) return;
+
+    const { action, id } = target.dataset;
+    actionHandlers[action](id);
   });
 
   renderPage();
