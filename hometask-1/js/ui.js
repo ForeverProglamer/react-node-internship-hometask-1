@@ -1,16 +1,23 @@
 import * as service from './note_service.js';
+import { NoteCategory } from './note.js';
 
 const [homePage, archivedPage] = document.querySelectorAll('.nav-link');
 
 const notesContainer = document.querySelector('#notes-list > tbody');
 const summaryContainer = document.querySelector('#summary > tbody');
 
+const createModalWindow = document.getElementById('create-note-modal-window');
 const createForm = document.getElementById('create-note-form');
 
 const createNameInput = document.getElementById('create-note-name');
 const createCategorySelect = document.getElementById('create-note-category');
 const createContentTextArea = document.getElementById('create-note-content');
 const createNoteButton = document.getElementById('create-note-button');
+
+const createNameError = document.getElementById('create-note-name-error');
+const createCategoryError = document.getElementById(
+  'create-note-category-error',
+);
 
 const newNoteButton = document.getElementById('new-note-button');
 
@@ -23,6 +30,9 @@ const editCategorySelect = document.getElementById('edit-note-category');
 const editDatesList = document.getElementById('edit-note-dates');
 const editContentTextArea = document.getElementById('edit-note-content');
 const editSaveButton = document.getElementById('edit-note-save-button');
+
+const editNameError = document.getElementById('edit-note-name-error');
+const editCategoryError = document.getElementById('edit-note-category-error');
 
 const renderDate = (date) => new Intl.DateTimeFormat('en-GB').format(date);
 
@@ -172,6 +182,47 @@ const clearEditForm = () => {
   editDatesList.innerHTML = '';
 };
 
+const validateFormData = ({ name, category }) => {
+  const errors = { name: '', category: '' };
+
+  const fieldIsRequired = (fieldName) => `${fieldName} is required field`;
+  const fieldMustBeLongerThan = (fieldName, value) =>
+    `${fieldName} must be longer than ${value} characters`;
+
+  if (!name) errors.name = fieldIsRequired('Name');
+
+  if (!Object.values(NoteCategory).includes(category)) {
+    errors.category = fieldIsRequired('Category');
+  }
+
+  if (name && name.length <= 4) errors.name = fieldMustBeLongerThan('Name', 4);
+
+  return errors;
+};
+
+const formDataHasErrors = (errors) =>
+  Object.values(errors).some((message) => message);
+
+const showCreateFormErrors = ({ name, category }) => {
+  createNameError.innerText = name;
+  createCategoryError.innerText = category;
+};
+
+const clearCreateFormErrors = () => {
+  createNameError.innerText = '';
+  createCategoryError.innerText = '';
+};
+
+const showEditFormErrors = ({ name, category }) => {
+  editNameError.innerText = name;
+  editCategoryError.innerText = category;
+};
+
+const clearEditFormErrors = () => {
+  editNameError.innerText = '';
+  editCategoryError.innerText = '';
+};
+
 const initPage = () => {
   homePage.addEventListener('click', toggleView);
   archivedPage.addEventListener('click', toggleView);
@@ -185,10 +236,18 @@ const initPage = () => {
   );
 
   createNoteButton.addEventListener('click', () => {
-    // TODO validate form
     const formData = getCreateFormData();
+    const errors = validateFormData(formData);
+
+    if (formDataHasErrors(errors)) {
+      showCreateFormErrors(errors);
+      return;
+    }
+
     service.addNote(formData);
     renderPage();
+
+    clearCreateFormErrors();
     clearCreateForm();
   });
 
@@ -202,15 +261,27 @@ const initPage = () => {
     actionHandlers[action](id);
   });
 
-  editModalWindow.addEventListener('hide.bs.modal', clearEditForm);
+  createModalWindow.addEventListener('hide.bs.modal', clearCreateFormErrors);
+  editModalWindow.addEventListener('hide.bs.modal', () => {
+    clearEditForm();
+    clearEditFormErrors();
+  });
 
   editSaveButton.addEventListener('click', () => {
-    // TODO validate form
     const formData = getEditFormData();
     const { id } = editForm.dataset;
+    const errors = validateFormData(formData);
+
+    if (formDataHasErrors(errors)) {
+      showEditFormErrors(errors);
+      return;
+    }
+
     service.updateNote(id, formData);
     readNote(id);
     renderPage();
+
+    clearEditFormErrors();
   });
 
   renderPage();

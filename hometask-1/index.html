@@ -79,6 +79,7 @@
                                 <div class="mb-3">
                                     <label for="note-name" class="col-form-label">Name:</label>
                                     <input type="text" class="form-control" id="create-note-name" required>
+                                    <div class="text-danger" id="create-note-name-error"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note-category" class="col-form-label">Category:</label>
@@ -88,6 +89,7 @@
                                         <option value="Idea">Idea</option>
                                         <option value="Random Thought">Random Thought</option>
                                     </select>
+                                    <div class="text-danger" id="create-note-category-error"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="message-text" class="col-form-label">Content:</label>
@@ -116,6 +118,7 @@
                                 <div class="mb-3">
                                     <label for="note-name" class="col-form-label">Name:</label>
                                     <input id="edit-note-name" type="text" class="form-control">
+                                    <div class="text-danger" id="edit-note-name-error"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note-created-at" class="col-form-label">Created At:</label>
@@ -129,6 +132,7 @@
                                         <option value="Idea">Idea</option>
                                         <option value="Random Thought">Random Thought</option>
                                     </select>
+                                    <div class="text-danger" id="edit-note-category-error"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="note-dates" class="col-form-label">Dates:</label>
