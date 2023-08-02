@@ -1,4 +1,4 @@
-import { parseDates } from './utils.js';
+import { parseDates } from './Utils.js';
 
 export const NoteCategory = Object.freeze({
   Task: 'Task',

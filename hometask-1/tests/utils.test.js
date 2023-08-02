@@ -1,4 +1,4 @@
-import { parseDates } from '../js/utils.js';
+import { parseDates } from '../js/Utils.js';
 
 describe('test parseDates', () => {
   test('returns empty array when input does not contain dates', () => {

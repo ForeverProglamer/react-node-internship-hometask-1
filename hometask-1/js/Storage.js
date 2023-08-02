@@ -1,4 +1,4 @@
-import { Note, NoteCategory } from './note.js';
+import { Note, NoteCategory } from './Note.js';
 
 const state = [
   new Note(
@@ -40,7 +40,7 @@ const state = [
   ),
 ];
 
-const storage = {
+const Storage = {
   getNote(index) {
     return state[index];
   },
@@ -63,4 +63,4 @@ const storage = {
   },
 };
 
-export default storage;
+export default Storage;

@@ -1,13 +1,13 @@
-import { Note, NoteCategory } from './note.js';
-import storage from './storage.js';
+import { Note, NoteCategory } from './Note.js';
+import Storage from './Storage.js';
 
-export const archiveNote = (index) => storage.getNote(index).archive();
+export const archiveNote = (index) => Storage.getNote(index).archive();
 
 export const getActiveNotes = () =>
-  storage.getNotes((note) => note.archived === false);
+  Storage.getNotes((note) => note.archived === false);
 
 export const getArchivedNotes = () =>
-  storage.getNotes((note) => note.archived === true);
+  Storage.getNotes((note) => note.archived === true);
 
 const getNotesSummary = (notes) => {
   const summary = Object.fromEntries([
@@ -26,11 +26,11 @@ export const getActiveNotesSummary = () => getNotesSummary(getActiveNotes());
 export const getArchivedNotesSummary = () =>
   getNotesSummary(getArchivedNotes());
 
-export const getNote = (index) => storage.getNote(index);
+export const getNote = (index) => Storage.getNote(index);
 
 export const addNote = ({ name, category, content }) =>
-  storage.addNote(new Note(name, category, content));
+  Storage.addNote(new Note(name, category, content));
 
-export const updateNote = (index, data) => storage.updateNote(index, data);
+export const updateNote = (index, data) => Storage.updateNote(index, data);
 
-export const removeNote = (index) => storage.removeNote(index);
+export const removeNote = (index) => Storage.removeNote(index);

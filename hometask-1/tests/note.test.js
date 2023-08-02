@@ -1,4 +1,4 @@
-import { validateNoteCategory, NoteCategory } from '../js/note.js';
+import { validateNoteCategory, NoteCategory } from '../js/Note.js';
 
 describe('test validateNoteCategory', () => {
   test('throws error when passing an invalid/unsupported category', () => {

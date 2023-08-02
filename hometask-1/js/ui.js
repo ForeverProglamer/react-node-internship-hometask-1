@@ -1,5 +1,5 @@
-import * as service from './note_service.js';
-import { NoteCategory } from './note.js';
+import * as service from './NoteService.js';
+import { NoteCategory } from './Note.js';
 
 const [homePage, archivedPage] = document.querySelectorAll('.nav-link');
 
