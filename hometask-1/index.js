@@ -1,5 +1,5 @@
-import initPage from './js/ui.js';
+import App from './js/App.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  initPage();
+  App.init();
 });
